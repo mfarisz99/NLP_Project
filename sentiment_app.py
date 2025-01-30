@@ -1,6 +1,5 @@
 import streamlit as st
 from transformers import pipeline
-from streamlit_star_rating import st_star_rating
 
 # Load the Hugging Face sentiment analysis pipeline
 @st.cache_resource
@@ -16,9 +15,9 @@ st.write("This app predicts whether a customer's review is positive or negative.
 
 # Satisfaction Ratings
 st.subheader("Rate Your Satisfaction")
-quality_rating = st_star_rating("Quality of the item:", maxValue=5, defaultValue=3)
-functionality_rating = st_star_rating("Functionality of the item:", maxValue=5, defaultValue=3)
-price_worthiness_rating = st_star_rating("Is the price worth it?", maxValue=5, defaultValue=3)
+quality_rating = st.selectbox("Quality of the item:", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
+functionality_rating = st.selectbox("Functionality of the item:", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
+price_worthiness_rating = st.selectbox("Is the price worth it?", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
 
 # Input text for analysis
 user_input = st.text_area("Enter a customer review:", height=150)
