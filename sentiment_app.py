@@ -20,12 +20,6 @@ quality_rating = st.radio("Quality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐',
 functionality_rating = st.radio("Functionality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
 price_worthiness_rating = st.radio("Is the price worth it?", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
 
-
-st.subheader("Rate Your Satisfaction")
-quality_rating = st.selectbox("Quality of the item:", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
-functionality_rating = st.selectbox("Functionality of the item:", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
-price_worthiness_rating = st.selectbox("Is the price worth it?", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
-
 # Convert star ratings to numerical values
 rating_mapping = {"⭐": 1, "⭐⭐": 2, "⭐⭐⭐": 3, "⭐⭐⭐⭐": 4, "⭐⭐⭐⭐⭐": 5}
 quality_score = rating_mapping[quality_rating]
