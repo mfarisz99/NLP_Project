@@ -1,6 +1,13 @@
 import streamlit as st
 from textblob import TextBlob
 import pandas as pd
+import nltk
+
+# Download NLTK data
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('brown')
+nltk.download('wordnet')
 
 # Title of the app
 st.title("Customer Review Sentiment Analysis")
