@@ -1,3 +1,4 @@
+
 import streamlit as st
 from transformers import pipeline
 
@@ -14,6 +15,12 @@ st.title("Customer Review Sentiment Analysis")
 st.write("This app predicts whether a customer's review is positive or negative, factoring in your satisfaction ratings.")
 
 # Satisfaction Ratings
+
+quality_rating = st.radio("Quality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
+functionality_rating = st.radio("Functionality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
+price_worthiness_rating = st.radio("Is the price worth it?", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
+
+
 st.subheader("Rate Your Satisfaction")
 quality_rating = st.selectbox("Quality of the item:", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
 functionality_rating = st.selectbox("Functionality of the item:", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"], index=2)
@@ -52,3 +59,4 @@ if st.button("Analyze Sentiment"):
 
 # Footer note
 st.write("\nModel powered by Hugging Face Transformers.")
+
