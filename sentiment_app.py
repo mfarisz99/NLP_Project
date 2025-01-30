@@ -1,13 +1,9 @@
 import streamlit as st
-from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import pandas as pd
-import nltk
 
-# Download NLTK data
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('brown')
-nltk.download('wordnet')
+# Initialize VADER
+analyzer = SentimentIntensityAnalyzer()
 
 # Title of the app
 st.title("Customer Review Sentiment Analysis")
@@ -18,18 +14,19 @@ review = st.text_area("Enter your review here:")
 # Analyze sentiment
 if st.button("Analyze Sentiment"):
     if review:
-        # Perform sentiment analysis using TextBlob
-        analysis = TextBlob(review)
-        sentiment = analysis.sentiment
+        # Perform sentiment analysis using VADER
+        sentiment = analyzer.polarity_scores(review)
 
         # Display results
-        st.write(f"Polarity: {sentiment.polarity}")
-        st.write(f"Subjectivity: {sentiment.subjectivity}")
+        st.write(f"Positive: {sentiment['pos']}")
+        st.write(f"Neutral: {sentiment['neu']}")
+        st.write(f"Negative: {sentiment['neg']}")
+        st.write(f"Compound Score: {sentiment['compound']}")
 
         # Determine sentiment label
-        if sentiment.polarity > 0:
+        if sentiment['compound'] >= 0.05:
             st.success("Positive Sentiment 😊")
-        elif sentiment.polarity < 0:
+        elif sentiment['compound'] <= -0.05:
             st.error("Negative Sentiment 😠")
         else:
             st.info("Neutral Sentiment 😐")
@@ -47,13 +44,14 @@ if uploaded_file is not None:
         results = []
         for index, row in data.iterrows():
             review_text = row["Review"]  # Assuming the column name is "Review"
-            analysis = TextBlob(review_text)
-            sentiment = analysis.sentiment
+            sentiment = analyzer.polarity_scores(review_text)
             results.append({
                 "Review": review_text,
-                "Polarity": sentiment.polarity,
-                "Subjectivity": sentiment.subjectivity,
-                "Sentiment": "Positive" if sentiment.polarity > 0 else "Negative" if sentiment.polarity < 0 else "Neutral"
+                "Positive": sentiment['pos'],
+                "Neutral": sentiment['neu'],
+                "Negative": sentiment['neg'],
+                "Compound Score": sentiment['compound'],
+                "Sentiment": "Positive" if sentiment['compound'] >= 0.05 else "Negative" if sentiment['compound'] <= -0.05 else "Neutral"
             })
         
         results_df = pd.DataFrame(results)
