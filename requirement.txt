@@ -4,3 +4,6 @@ torch
 numpy
 plotly
 matplotlib
+nltk
+textblob
+pandas
