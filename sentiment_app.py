@@ -1,59 +1,35 @@
 import streamlit as st
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import pandas as pd
+from transformers import pipeline
 
-# Initialize VADER
-analyzer = SentimentIntensityAnalyzer()
+# Load the Hugging Face sentiment analysis pipeline
+@st.cache_resource
+def load_sentiment_model():
+    return pipeline('sentiment-analysis')
 
-# Title of the app
+# Initialize the sentiment analysis pipeline
+sentiment_classifier = load_sentiment_model()
+
+# Streamlit App UI
 st.title("Customer Review Sentiment Analysis")
+st.write("This app predicts whether a customer's review is positive or negative.")
 
-# Input text box for customer review
-review = st.text_area("Enter your review here:")
+# Input text for analysis
+user_input = st.text_area("Enter a customer review:", height=150)
 
-# Analyze sentiment
 if st.button("Analyze Sentiment"):
-    if review:
-        # Perform sentiment analysis using VADER
-        sentiment = analyzer.polarity_scores(review)
+    if user_input.strip():
+        # Perform sentiment analysis
+        result = sentiment_classifier(user_input)
+        label = result[0]['label']
+        score = result[0]['score']
 
-        # Display results
-        st.write(f"Positive: {sentiment['pos']}")
-        st.write(f"Neutral: {sentiment['neu']}")
-        st.write(f"Negative: {sentiment['neg']}")
-        st.write(f"Compound Score: {sentiment['compound']}")
-
-        # Determine sentiment label
-        if sentiment['compound'] >= 0.05:
-            st.success("Positive Sentiment 😊")
-        elif sentiment['compound'] <= -0.05:
-            st.error("Negative Sentiment 😠")
+        # Display the result
+        if label == "POSITIVE":
+            st.success(f"Positive Sentiment (Confidence: {score:.2f})")
         else:
-            st.info("Neutral Sentiment 😐")
+            st.error(f"Negative Sentiment (Confidence: {score:.2f})")
     else:
         st.warning("Please enter a review to analyze.")
 
-# Optional: Add a file uploader for bulk analysis
-uploaded_file = st.file_uploader("Upload a CSV file with reviews", type=["csv"])
-if uploaded_file is not None:
-    data = pd.read_csv(uploaded_file)
-    st.write("Preview of uploaded data:")
-    st.write(data.head())
-
-    if st.button("Analyze Bulk Reviews"):
-        results = []
-        for index, row in data.iterrows():
-            review_text = row["Review"]  # Assuming the column name is "Review"
-            sentiment = analyzer.polarity_scores(review_text)
-            results.append({
-                "Review": review_text,
-                "Positive": sentiment['pos'],
-                "Neutral": sentiment['neu'],
-                "Negative": sentiment['neg'],
-                "Compound Score": sentiment['compound'],
-                "Sentiment": "Positive" if sentiment['compound'] >= 0.05 else "Negative" if sentiment['compound'] <= -0.05 else "Neutral"
-            })
-        
-        results_df = pd.DataFrame(results)
-        st.write("Sentiment Analysis Results:")
-        st.write(results_df)
+# Footer note
+st.write("\nModel powered by Hugging Face Transformers.")
