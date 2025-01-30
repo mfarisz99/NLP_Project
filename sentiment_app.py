@@ -13,6 +13,17 @@ sentiment_classifier = load_sentiment_model()
 st.title("Customer Review Sentiment Analysis")
 st.write("This app predicts whether a customer's review is positive or negative.")
 
+# Satisfaction Ratings
+st.subheader("Rate Your Satisfaction")
+quality_rating = st.slider("Quality of the item:", 1, 5, 3, format="%d star(s)")
+functionality_rating = st.slider("Functionality of the item:", 1, 5, 3, format="%d star(s)")
+price_worthiness_rating = st.slider("Is the price worth it?", 1, 5, 3, format="%d star(s)")
+
+st.write("Your Ratings:")
+st.write(f"- Quality: {quality_rating} star(s)")
+st.write(f"- Functionality: {functionality_rating} star(s)")
+st.write(f"- Price Worthiness: {price_worthiness_rating} star(s)")
+
 # Input text for analysis
 user_input = st.text_area("Enter a customer review:", height=150)
 
