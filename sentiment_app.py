@@ -41,7 +41,7 @@ if st.button("Analyze Sentiment"):
 
         # Final sentiment adjustment
         adjusted_score = (text_score * 0.7) + (average_star_score * 0.3)
-        final_label = "POSITIVE" if adjusted_score >= 0.5 else "NEGATIVE"
+        final_label = "POSITIVE" if adjusted_score >= 0.9  else "NEGATIVE"
 
         # Display the result
         if final_label == "POSITIVE":
