@@ -43,13 +43,20 @@ if st.button("Analyze Sentiment"):
         text_label = result[0]['label']
         text_score = result[0]['score']
 
+        # Normalize sentiment score (convert from 0.5-1 → 0-1 scale)
+        normalized_sentiment_score = (text_score - 0.5) * 2 
+
         # Convert star rating to numerical score (normalized to 0-1 scale)
         product_score = st.session_state["product_score"]
-        star_score = product_score / 5  # Normalize to range 0-1
+        star_score = (product_score - 1) / 4  # Normalize to range 0-1
         
-        # Final sentiment adjustment
-        adjusted_score = (text_score * 0.5) + (star_score * 0.5)
-        final_label = "POSITIVE" if adjusted_score >= 0.7  else "NEGATIVE"
+        # Adjust weight dynamically based on sentiment confidence
+        if text_label == "POSITIVE":
+            adjusted_score = (normalized_sentiment_score * 0.6) + (star_score * 0.4)
+        else:
+            adjusted_score = (normalized_sentiment_score * 0.7) + (star_score * 0.3)  # Give negative review more weight
+
+        final_label = "POSITIVE" if adjusted_score >= 0.5 else "NEGATIVE" 
 
         # Display the result
         if final_label == "POSITIVE":
