@@ -49,12 +49,19 @@ st.markdown("""
             padding: 12px 24px;
             font-size: 18px;
             transition: all 0.3s ease;
+            border: none;
+            outline: none; /* Removes red outline */
         }
         .stButton button:hover {
             background-color: #2ecc71; /* Soft green effect */
             transform: scale(1.05);
             box-shadow: 0 0 10px rgba(46, 204, 113, 0.7);
             cursor: pointer;
+        }
+        .stButton button:focus {
+            background-color: #27ae60; /* Darker green on click */
+            box-shadow: 0 0 12px rgba(46, 204, 113, 0.9); /* Strong green glow */
+            outline: none; /* Removes default focus outline */
         }
         .stTitle {
             font-size: 36px;
