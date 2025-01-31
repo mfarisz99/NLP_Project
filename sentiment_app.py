@@ -16,18 +16,14 @@ st.write("This app predicts whether a customer's review is positive or negative,
 
 # Satisfaction Ratings
 
-quality_rating = st.radio("Quality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
-functionality_rating = st.radio("Functionality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
-price_worthiness_rating = st.radio("Is the price worth it?", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
+product_rating = st.radio("Quality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
 
 # Convert star ratings to numerical values
 rating_mapping = {"⭐": 1, "⭐⭐": 2, "⭐⭐⭐": 3, "⭐⭐⭐⭐": 4, "⭐⭐⭐⭐⭐": 5}
-quality_score = rating_mapping[quality_rating]
-functionality_score = rating_mapping[functionality_rating]
-price_score = rating_mapping[price_worthiness_rating]
+product_score = rating_mapping[product_rating]
 
 # Input text for analysis
-user_input = st.text_area("Enter a customer review:", height=150)
+user_input = st.text_area("Enter a customer review:", height=100)
 
 if st.button("Analyze Sentiment"):
     if user_input.strip():
@@ -37,11 +33,11 @@ if st.button("Analyze Sentiment"):
         text_score = result[0]['score']
 
         # Calculate average star rating score (normalized to 0-1 scale)
-        average_star_score = (quality_score + functionality_score + price_score) / 15
+        average_star_score = (product_score) / 15
 
         # Final sentiment adjustment
-        adjusted_score = (text_score * 0.7) + (average_star_score * 0.3)
-        final_label = "POSITIVE" if adjusted_score >= 0.9  else "NEGATIVE"
+        adjusted_score = (text_score * 0.8) + (average_star_score * 0.2)
+        final_label = "POSITIVE" if adjusted_score >= 0.7  else "NEGATIVE"
 
         # Display the result
         if final_label == "POSITIVE":
