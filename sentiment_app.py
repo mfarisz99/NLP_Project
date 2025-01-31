@@ -9,6 +9,50 @@ def load_sentiment_model():
 # Initialize the sentiment analysis pipeline
 sentiment_classifier = load_sentiment_model()
 
+# Set Streamlit page config for custom theme
+st.set_page_config(
+    page_title="Customer Review Sentiment Analysis",
+    page_icon=":speech_balloon:",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
+# Custom CSS for background and styling
+st.markdown("""
+    <style>
+        body {
+            background-image: url('https://your-image-url-here.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        .stTextArea textarea {
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #333;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .stButton button {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            padding: 10px 24px;
+            font-size: 18px;
+        }
+        .stButton button:hover {
+            background-color: #45a049;
+        }
+        .stTitle {
+            font-family: 'Arial', sans-serif;
+        }
+        .stMarkdown {
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Streamlit App UI
 st.title("Customer Review Sentiment Analysis")
 st.write("This app predicts whether a customer's review is positive or negative.")
