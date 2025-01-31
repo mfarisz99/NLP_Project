@@ -21,34 +21,62 @@ st.set_page_config(
 st.markdown("""
     <style>
         body {
-            background-image: url('https://your-image-url-here.jpg');
+            background: linear-gradient(135deg, #f06, #4a90e2);
             background-size: cover;
             background-position: center;
             color: white;
+            font-family: 'Arial', sans-serif;
         }
         .stTextArea textarea {
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 0.9);
             color: #333;
             border-radius: 10px;
             font-size: 16px;
             font-weight: bold;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .stTextArea textarea:focus {
+            background-color: #f0f0f0;
+            outline: none;
+            box-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
         }
         .stButton button {
-            background-color: #4CAF50;
+            background-color: #75F2DA;
             color: white;
             border-radius: 12px;
-            padding: 10px 24px;
+            padding: 12px 24px;
             font-size: 18px;
+            transition: all 0.3s ease;
         }
         .stButton button:hover {
             background-color: #45a049;
+            transform: scale(1.1);
+            cursor: pointer;
         }
         .stTitle {
-            font-family: 'Arial', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
         }
         .stMarkdown {
-            font-family: 'Arial', sans-serif;
             font-size: 18px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .stAlert {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .stSuccess, .stError {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .stWarning {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f39c12;
         }
     </style>
 """, unsafe_allow_html=True)
