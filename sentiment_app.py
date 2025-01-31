@@ -49,11 +49,6 @@ st.markdown("""
             font-size: 18px;
             transition: all 0.3s ease;
         }
-        .stButton button:hover {
-            background-color: #45a049;
-            transform: scale(1.1);
-            cursor: pointer;
-        }
         .stTitle {
             font-size: 36px;
             font-weight: 700;
