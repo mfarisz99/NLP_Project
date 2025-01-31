@@ -40,7 +40,7 @@ st.markdown("""
         .stTextArea textarea:focus {
             background-color: rgba(70, 70, 70, 0.9);
             outline: none;
-            box-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+            box-shadow: 0 0 10px rgba(0, 180, 255, 0.8);
         }
         .stButton button {
             background-color: #4C4C4C;
@@ -51,8 +51,10 @@ st.markdown("""
             transition: all 0.3s ease;
         }
         .stButton button:hover {
-            background-color: #606060;
+            background-color: #2ecc71; /* Soft green effect */
             transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.7);
+            cursor: pointer;
         }
         .stTitle {
             font-size: 36px;
