@@ -28,16 +28,17 @@ st.markdown("""
             font-family: 'Arial', sans-serif;
         }
         .stTextArea textarea {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
+            background-color: rgba(50, 50, 50, 0.8); /* Darker grey background */
+            color: white; /* White text for readability */
             border-radius: 10px;
             font-size: 16px;
             font-weight: bold;
             padding: 12px;
             transition: all 0.3s ease;
+            border: 1px solid #666; /* Slight border for better visibility */
         }
         .stTextArea textarea:focus {
-            background-color: #f0f0f0;
+            background-color: rgba(70, 70, 70, 0.9);
             outline: none;
             box-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
         }
@@ -49,6 +50,10 @@ st.markdown("""
             font-size: 18px;
             transition: all 0.3s ease;
         }
+        .stButton button:hover {
+            background-color: #606060;
+            transform: scale(1.05);
+        }
         .stTitle {
             font-size: 36px;
             font-weight: 700;
@@ -57,7 +62,7 @@ st.markdown("""
         }
         .stMarkdown {
             font-size: 18px;
-            text-align: center;
+            text-align: left; /* Left-aligning the description text */
             font-weight: 500;
         }
         .stAlert {
