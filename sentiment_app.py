@@ -42,7 +42,7 @@ st.markdown("""
             box-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
         }
         .stButton button {
-            background-color: #001793;
+            background-color: #4C4C4C;
             color: white;
             border-radius: 12px;
             padding: 12px 24px;
