@@ -11,27 +11,7 @@ sentiment_classifier = load_sentiment_model()
 
 # Streamlit App UI
 st.title("Customer Review Sentiment Analysis")
-st.write("This app predicts whether a customer's review is positive or negative, factoring in your satisfaction ratings.")
-
-st.subheader("Rate the Quality of the Item:")
-# Define star ratings
-stars = ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"]
-rating_mapping = {1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐", 5: "⭐⭐⭐⭐⭐"}
-
-# Use st.columns for a better UI layout
-cols = st.columns(5)
-
-# Initialize session state for rating
-if "product_score" not in st.session_state:
-    st.session_state["product_score"] = 3  # Default to 3-star rating
-
-# Button-based star selection
-for i, col in enumerate(cols, start=1):
-    if col.button(stars[i - 1]):
-        st.session_state["product_score"] = i
-
-# Display selected rating
-st.markdown(f"### Selected Rating: {rating_mapping[st.session_state['product_score']]}")
+st.write("This app predicts whether a customer's review is positive or negative and visualizes the sentiment strength.")
 
 # Input text for analysis
 user_input = st.text_area("Enter a customer review:", height=100)
@@ -43,22 +23,27 @@ if st.button("Analyze Sentiment"):
         text_label = result[0]['label']
         text_score = result[0]['score']
 
-        # Normalize sentiment score (convert from 0.5-1 → 0-1 scale)
-        normalized_sentiment_score = (text_score - 0.5) * 2 
+        # Normalize sentiment score (0.5 - 1) → (0 - 1)
+        normalized_sentiment_score = (text_score - 0.5) * 2  
 
-        # Convert star rating to numerical score (normalized to 0-1 scale)
-        product_score = st.session_state["product_score"]
-        star_score = (product_score - 1) / 4  # Normalize to range 0-1
-        
-        # Final sentiment adjustment (70% from sentiment, 30% from star rating)
-        adjusted_score = (normalized_sentiment_score * 0.7) + (star_score * 0.3)
-        final_label = "POSITIVE" if adjusted_score >= 0.6 else "NEGATIVE" 
+        # Convert score to percentage (0-100)
+        sentiment_percentage = int(normalized_sentiment_score * 100)
 
-        # Display the result
-        if final_label == "POSITIVE":
-            st.success(f"Positive Sentiment (Adjusted Confidence: {adjusted_score:.2f})")
+        # Define color and status
+        if text_label == "POSITIVE":
+            sentiment_status = "Positive"
+            color = "green"
         else:
-            st.error(f"Negative Sentiment (Adjusted Confidence: {adjusted_score:.2f})")
+            sentiment_status = "Negative"
+            color = "red"
+            sentiment_percentage = 100 - sentiment_percentage  # Invert for better visualization
+
+        # Display sentiment result
+        st.markdown(f"### **Sentiment: {sentiment_status} ({sentiment_percentage}%)**")
+        
+        # Emotional meter (progress bar)
+        st.progress(sentiment_percentage / 100)
+
     else:
         st.warning("Please enter a review to analyze.")
 
