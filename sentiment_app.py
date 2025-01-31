@@ -1,4 +1,3 @@
-
 import streamlit as st
 from transformers import pipeline
 
@@ -14,13 +13,25 @@ sentiment_classifier = load_sentiment_model()
 st.title("Customer Review Sentiment Analysis")
 st.write("This app predicts whether a customer's review is positive or negative, factoring in your satisfaction ratings.")
 
-# Satisfaction Ratings
+st.subheader("Rate the Quality of the Item:")
+# Define star ratings
+stars = ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"]
+rating_mapping = {1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐", 5: "⭐⭐⭐⭐⭐"}
 
-product_rating = st.radio("Quality of the item:", ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], index=2)
+# Use st.columns for a better UI layout
+cols = st.columns(5)
 
-# Convert star ratings to numerical values
-rating_mapping = {"⭐": 1, "⭐⭐": 2, "⭐⭐⭐": 3, "⭐⭐⭐⭐": 4, "⭐⭐⭐⭐⭐": 5}
-product_score = rating_mapping[product_rating]
+# Initialize session state for rating
+if "product_score" not in st.session_state:
+    st.session_state["product_score"] = 3  # Default to 3-star rating
+
+# Button-based star selection
+for i, col in enumerate(cols, start=1):
+    if col.button(stars[i - 1]):
+        st.session_state["product_score"] = i
+
+# Display selected rating
+st.markdown(f"### Selected Rating: {rating_mapping[st.session_state['product_score']]}")
 
 # Input text for analysis
 user_input = st.text_area("Enter a customer review:", height=100)
@@ -32,11 +43,12 @@ if st.button("Analyze Sentiment"):
         text_label = result[0]['label']
         text_score = result[0]['score']
 
-        # Calculate average star rating score (normalized to 0-1 scale)
-        average_star_score = (product_score) / 15
-
+        # Convert star rating to numerical score (normalized to 0-1 scale)
+        product_score = st.session_state["product_score"]
+        star_score = product_score / 5  # Normalize to range 0-1
+        
         # Final sentiment adjustment
-        adjusted_score = (text_score * 0.8) + (average_star_score * 0.2)
+        adjusted_score = (text_score * 0.5) + (average_star_score * 0.5)
         final_label = "POSITIVE" if adjusted_score >= 0.7  else "NEGATIVE"
 
         # Display the result
