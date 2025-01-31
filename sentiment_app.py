@@ -56,7 +56,7 @@ if st.button("Analyze Sentiment"):
         else:
             adjusted_score = (normalized_sentiment_score * 0.7) + (star_score * 0.3)  # Give negative review more weight
 
-        final_label = "POSITIVE" if adjusted_score >= 0.5 else "NEGATIVE" 
+        final_label = "POSITIVE" if adjusted_score >= 0.6 else "NEGATIVE" 
 
         # Display the result
         if final_label == "POSITIVE":
